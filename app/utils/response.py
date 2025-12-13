@@ -15,3 +15,11 @@ def response_error(message, status_code=400):
         "data": None
     }
     return make_response(jsonify(response), status_code)
+
+def response_not_found(message="Resource not found", status_code=404):
+    response = {
+        "code": status_code,
+        "message": message,
+        "data": None
+    }
+    return make_response(jsonify(response), status_code)
