@@ -1,13 +1,13 @@
 from flask import Flask
 from flasgger import Swagger
 from flask_migrate import Migrate
-from app.modules.main.route import main_bp
 from app.db.db import db
+from app.routes import routes
 
 
 def initialize_route(app: Flask):
     with app.app_context():
-        app.register_blueprint(main_bp, url_prefix='/api/v1/main')
+        routes(app)
 
 
 def initialize_db(app: Flask):
