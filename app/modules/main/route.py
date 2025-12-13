@@ -4,7 +4,7 @@ from .controller import MainController
 
 main_bp = Blueprint('main', __name__)
 main_controller = MainController()
-@main_bp.route('/index', methods=['GET'])
+@main_bp.route('/', methods=['GET'])
 def index():
     """ Example endpoint with simple greeting.
     ---
