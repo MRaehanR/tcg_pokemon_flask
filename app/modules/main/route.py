@@ -1,11 +1,13 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint
 from .controller import MainController
+from flask_jwt_extended import jwt_required
 from app.utils.response import response_success
 
 
 main_bp = Blueprint('main', __name__)
 main_controller = MainController()
 @main_bp.route('/', methods=['GET'])
+@jwt_required()
 def index():
     """ Example endpoint with simple greeting.
     ---
