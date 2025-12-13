@@ -1,5 +1,6 @@
 from flask import Blueprint, make_response, jsonify
 from .controller import MainController
+from app.utils.response import response_success
 
 
 main_bp = Blueprint('main', __name__)
@@ -24,5 +25,5 @@ def index():
                   example: "Hello World!"
     """
     result=main_controller.index()
-    return make_response(jsonify(data=result))
+    return response_success(result)
       
