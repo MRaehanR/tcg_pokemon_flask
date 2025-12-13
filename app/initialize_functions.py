@@ -1,6 +1,7 @@
 from flask import Flask
 from flasgger import Swagger
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 from app.db.db import db
 from app.routes import routes
 
@@ -20,3 +21,8 @@ def initialize_swagger(app: Flask):
     with app.app_context():
         swagger = Swagger(app)
         return swagger
+    
+def initialize_jwt(app: Flask):
+    with app.app_context():
+        jwt = JWTManager(app)
+        return jwt

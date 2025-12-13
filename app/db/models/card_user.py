@@ -2,10 +2,10 @@ from app.db.db import db
 from datetime import datetime
 
 
-class CardUsers(db.Model):
+class CardUser(db.Model):
     __tablename__ = 'card_users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey('cards.id'), nullable=False)
     stars = db.Column(db.Integer, default=0)

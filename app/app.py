@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config.config import get_config_by_name
-from app.initialize_functions import initialize_route, initialize_db, initialize_swagger
+from app.initialize_functions import initialize_route, initialize_db, initialize_swagger, initialize_jwt
 
 def create_app(config=None) -> Flask:
     """
@@ -24,5 +24,8 @@ def create_app(config=None) -> Flask:
 
     # Initialize Swagger
     initialize_swagger(app)
+    
+    # Initialize JWT
+    initialize_jwt(app)
 
     return app
