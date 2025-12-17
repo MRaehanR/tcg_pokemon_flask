@@ -12,5 +12,3 @@ class UserSeeder(Seeder):
         
         for user in faker.create(10):
             self.db.session.add(user)
-        
-        print("Seeding Finished: Users added.")
