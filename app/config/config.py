@@ -4,6 +4,7 @@ class BaseConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'your-secret-key'
+    FLASK_SEEDER_FOLDER = 'app/db/seeds'
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration."""
