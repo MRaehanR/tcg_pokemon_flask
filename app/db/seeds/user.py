@@ -12,3 +12,10 @@ class UserSeeder(Seeder):
         
         for user in faker.create(10):
             self.db.session.add(user)
+            
+        user1 = User(
+            username='user1',
+            password=generate_password_hash('password'),
+            gold=500
+        )
+        self.db.session.add(user1)
