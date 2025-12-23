@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_seeder import FlaskSeeder
 from app.db.db import db
 from app.routes import routes
+from app.db.models.user import User
 
 
 def initialize_route(app: Flask):
@@ -26,6 +27,18 @@ def initialize_swagger(app: Flask):
 def initialize_jwt(app: Flask):
     with app.app_context():
         jwt = JWTManager(app)
+
+        @jwt.user_identity_loader
+        def user_identity_lookup(user_data):
+            if isinstance(user_data, dict):
+                return str(user_data.get("id")) 
+            return str(user_data)
+
+        @jwt.user_lookup_loader
+        def user_lookup_callback(_jwt_header, jwt_data):
+            identity = jwt_data["sub"] 
+            return User.query.get(int(identity))
+
         return jwt
 
 def initialize_seeder(app: Flask):
