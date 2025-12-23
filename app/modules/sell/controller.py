@@ -3,11 +3,13 @@ from app.db.models.card_market import CardMarket
 from datetime import datetime
 from app.utils.response import *
 from app.db.db import db
+from flask_jwt_extended import jwt_required, current_user
 
 class SellController:
+    @jwt_required()
     def index(self):
-        seller_id = 1  
-
+        seller_id = current_user.id
+        
         data = request.get_json()
         if not data:
             return response_error("Invalid JSON body")
@@ -41,8 +43,9 @@ class SellController:
             db.session.rollback()
             return response_error(f"Database error: {str(e)}")
     
+    @jwt_required()
     def cancel(self):
-        seller_id = 1 
+        seller_id = current_user.id
 
         data = request.get_json()
         if not data:
