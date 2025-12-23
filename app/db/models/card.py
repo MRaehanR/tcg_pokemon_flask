@@ -9,7 +9,9 @@ class Card(db.Model):
     name = db.Column(db.String(100), nullable=False)
     spread = db.Column(db.Integer, nullable=False)
     max_spread = db.Column(db.Integer, nullable=False)
+    image_path = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
     card_users = db.relationship('CardUser', backref='card', lazy=True)
