@@ -3,6 +3,9 @@ from app.db.models.user import User
 from werkzeug.security import generate_password_hash
 
 class UserSeeder(Seeder):
+    def __init__(self):
+        self.priority = 1
+        
     def run(self):
         faker = Faker(cls=User, init={
             'username': generator.Name(),
