@@ -1,5 +1,6 @@
 from flask import Blueprint, make_response, jsonify
 from .controller import ProfileController
+from app.utils.response import response_success, response_error
 
 
 profile_bp = Blueprint('profile', __name__)
@@ -23,6 +24,9 @@ def index():
                   type: string
                   example: "Hello World!"
     """
-    result=profile_controller.index()
-    return make_response(jsonify(data=result))
+    try:
+        result=profile_controller.index()
+    except Exception as e:
+        return response_error(str(e), status_code=401)
+    return response_success(result)
       

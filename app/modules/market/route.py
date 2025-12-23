@@ -6,7 +6,7 @@ from .controller import MarketController
 market_bp = Blueprint('market', __name__)
 market_controller = MarketController()
 @market_bp.route('/', methods=['GET'])
-def index():
+def market_route():
     """ Example endpoint with simple greeting.
     ---
     tags:
@@ -24,6 +24,6 @@ def index():
                   type: string
                   example: "Hello World!"
     """
-    result=market_controller.index()
+    result=market_controller.market()
     return make_response(jsonify(data=result))
       

@@ -1,36 +1,46 @@
-from flask import request
-from app import app
-from app.db.models.market import Market
-from app.db.db import db
+from flask import request, jsonify
+from flask_jwt_extended import jwt_required, current_user
+from app.db.models.card_market import CardMarket
+from app.db.models.card_user import CardUser
+from app.db.models.card import Card
 
 class MarketController:
+    @jwt_required()
     def market(self):
-        user_id = request.json.get("user_id", None)
-        search = request.json.get("search", None)
-        price = request.json.get("price", None)
-        query = Market.query
-        if user_id:
-            query = query.filter_by(user_id=user_id)
+        user_id = current_user.id
+
+        param_user_id = request.args.get("user_id", None)
+        search = request.args.get("search", None)
+        sort_price = request.args.get("price", None)
+
+        query = CardMarket.query.join(CardMarket.card_user).join(CardUser.card)
+
+        if param_user_id:
+            query = query.filter(CardMarket.seller_id == param_user_id)
+
         if search:
-            query = query.filter(Market.name.like(f"%{search}%"))
-        if price == "asc":
-            query = query.order_by(Market.price.asc())
-        elif price == "desc":
-            query = query.order_by(Market.price.desc())
+            query = query.filter(CardUser.card.has(Card.name.like(f"%{search}%")))
+
+        if sort_price == "asc":
+            query = query.order_by(CardMarket.price.asc())
+        elif sort_price == "desc":
+            query = query.order_by(CardMarket.price.desc())
+        else:
+            query = query.order_by(CardMarket.created_at.desc())
+
         markets = query.all()
 
-        data = []
+        market_data = []
         for m in markets:
-            data.append({
-                "id": m.id,
-                "name": m.name,
+            market_data.append({
+                "market_id": m.id,
+                "card_name": m.card_user.card.name if m.card_user and m.card_user.card else None,
                 "price": m.price,
-                "stock": m.stock,
-                "user_id": m.user_id
+                "tanggal_jual": str(m.created_at),
+                "seller_id": m.seller_id
             })
-        return data
-market = MarketController()
 
-@app.route("/api/v1/market", methods=["POST"])
-def market_index():
-    return market.market()
+        return {
+            "user_id": user_id,
+            "market": market_data
+        }
