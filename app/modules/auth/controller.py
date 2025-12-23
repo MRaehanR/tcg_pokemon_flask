@@ -12,8 +12,13 @@ class AuthController:
         user = User.query.filter_by(username=username).first()
         if not user or not check_password_hash(user.password, password):
             raise Exception("Bad username or password")
+        
+        identityUser = {
+            "id": user.id,
+            "username": user.username
+        }
 
-        access_token = create_access_token(identity=username)
+        access_token = create_access_token(identity=identityUser)
         return {"access_token": access_token}
     
     def register(self):
@@ -28,9 +33,19 @@ class AuthController:
             raise Exception("Username already exists")
         
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
         
-        access_token = create_access_token(identity=username)
+        try:
+            new_user = User(username=username, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise Exception("Failed to create user: " + str(e))
+        
+        identityUser = {
+            "id": new_user.id,
+            "username": new_user.username
+        }
+        
+        access_token = create_access_token(identity=identityUser)
         return {"access_token": access_token}
