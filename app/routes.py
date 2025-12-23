@@ -8,4 +8,4 @@ def routes(app: Flask):
     app.register_blueprint(main_bp, url_prefix='/api/v1/main')
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(sell_bp, url_prefix='/api/v1/sell')
-    app.register_blueprint(storage_bp, url_prefix='/api/v1/storage')
+    app.register_blueprint(storage_bp, url_prefix='/storage')

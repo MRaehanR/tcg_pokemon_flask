@@ -11,6 +11,7 @@ class User(db.Model):
     gold = db.Column(db.Integer, default=0)
     last_gift_claim = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
     card_users = db.relationship('CardUser', backref='user', lazy=True, foreign_keys='CardUser.user_id')
