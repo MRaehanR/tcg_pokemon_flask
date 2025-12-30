@@ -16,7 +16,7 @@ class CardUserSeeder(Seeder):
             self.db.session.add(card_user)
             
         user1 = Faker(cls=CardUser, init={
-            'user_id': 1,
+            'user_id': 11,
             'card_id': generator.Integer(1, 10),
             'stars': generator.Integer(0, 5),
         })

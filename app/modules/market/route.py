@@ -5,7 +5,7 @@ from .controller import MarketController
 
 market_bp = Blueprint('market', __name__)
 market_controller = MarketController()
-@market_bp.route('/', methods=['GET'])
+@market_bp.route('/get', methods=['GET'])
 def market_route():
     """ Example endpoint with simple greeting.
     ---

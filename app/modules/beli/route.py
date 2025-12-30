@@ -6,7 +6,7 @@ from .controller import BeliController
 beli_bp = Blueprint('beli', __name__)
 beli_controller = BeliController()
 
-@beli_bp.route('/', methods=['POST'])
+@beli_bp.route('/post', methods=['POST'])
 def beli():
     """ Example endpoint with simple greeting.
     ---

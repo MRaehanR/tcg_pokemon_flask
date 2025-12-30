@@ -34,7 +34,10 @@ class MarketController:
         for m in markets:
             market_data.append({
                 "market_id": m.id,
+                "card_id": m.card_user.card.id if m.card_user and m.card_user.card else None,
                 "card_name": m.card_user.card.name if m.card_user and m.card_user.card else None,
+                "image": m.card_user.card.image_path if m.card_user and m.card_user.card else None,
+                "stars": m.card_user.stars if m.card_user else None,
                 "price": m.price,
                 "tanggal_jual": str(m.created_at),
                 "seller_id": m.seller_id

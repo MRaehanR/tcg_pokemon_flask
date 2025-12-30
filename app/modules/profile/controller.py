@@ -9,6 +9,7 @@ class ProfileController:
         user_id = current_user.id
 
         is_sell_mode = request.args.get('sell') == 'true'
+        print("Is Sell Mode:", is_sell_mode)
 
         user = User.query.filter_by(id=user_id).first()
         if not user:
@@ -18,7 +19,10 @@ class ProfileController:
 
         user_cards = []
         for cu in card_users:
-            is_in_market = True if cu.card_market else False
+            card_market = cu.card_market[0] if cu.card_market else None
+            is_in_market = card_market is not None
+            
+            print("Card Market:", card_market)
             
             if is_sell_mode and is_in_market:
                 continue
@@ -31,7 +35,8 @@ class ProfileController:
                 "spread": cu.card.spread,
                 "max_spread": cu.card.max_spread,
                 "image": cu.card.image_path,
-                "is_in_market": is_in_market
+                "is_in_market": is_in_market,
+                "market_id": card_market.id if is_in_market else None
             })
 
         return {

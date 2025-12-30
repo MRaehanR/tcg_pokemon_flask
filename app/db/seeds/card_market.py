@@ -8,11 +8,12 @@ class CardMarketSeeder(Seeder):
         self.priority = 4
         
     def run(self):
-        cardUser1 = CardUser.query.filter_by(user_id=1).all()
+        cardUser1 = CardUser.query.filter_by(user_id=11).all()
         
-        for card_user in cardUser1:
+        # Get only first 5 cards from user 11
+        for card_user in cardUser1[:5]:
             cardUserSells = CardMarket(
-                seller_id=1,
+                seller_id=11,
                 card_id=card_user.id,
                 price=randint(10, 1000)
             )

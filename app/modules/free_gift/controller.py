@@ -23,8 +23,8 @@ class Free_giftController:
             raise Exception("User Tidak ditemukan!")
         
         today = datetime.now()
-        if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
-            raise Exception("Kamu sudah mengambil free gift hari ini")
+        # if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
+        #     raise Exception("Kamu sudah mengambil free gift hari ini")
         
         try:
             user.gold += 100
@@ -47,8 +47,8 @@ class Free_giftController:
             raise Exception("User Tidak ditemukan!")
 
         today = datetime.now()
-        if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
-            raise Exception("Kamu sudah mengambil free gift hari ini")
+        # if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
+        #     raise Exception("Kamu sudah mengambil free gift hari ini")
 
         cards = Card.query.all()
         random_card = random.randint(0, len(cards))
