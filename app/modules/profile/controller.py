@@ -1,3 +1,4 @@
+from flask import request
 from flask_jwt_extended import jwt_required, current_user
 from app.db.models.user import User
 from app.db.models.card_user import CardUser
@@ -7,6 +8,8 @@ class ProfileController:
     def index(self):
         user_id = current_user.id
 
+        is_sell_mode = request.args.get('sell') == 'true'
+
         user = User.query.filter_by(id=user_id).first()
         if not user:
             raise Exception("User not found")
@@ -15,6 +18,11 @@ class ProfileController:
 
         user_cards = []
         for cu in card_users:
+            is_in_market = True if cu.card_market else False
+            
+            if is_sell_mode and is_in_market:
+                continue
+
             user_cards.append({
                 "card_user_id": cu.id,
                 "card_id": cu.card.id,
@@ -23,7 +31,7 @@ class ProfileController:
                 "spread": cu.card.spread,
                 "max_spread": cu.card.max_spread,
                 "image": cu.card.image_path,
-                "is_in_market": True if cu.card_market else False
+                "is_in_market": is_in_market
             })
 
         return {
