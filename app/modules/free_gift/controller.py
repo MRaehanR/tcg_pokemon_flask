@@ -59,6 +59,10 @@ class Free_giftController:
         cardUserNew = CardUser(user_id=user_id, card_id= cards[random_card].id, stars= card_star)
         db.session.add(cardUserNew)
         db.session.commit()
+        
+        cardNew = Card.query.get(cards[random_card].id)
+        
+        print(cardNew.name, cardNew.spread, cardNew.max_spread, cardNew.image_path)
 
         try:
             user.last_gift_claim = today
@@ -72,7 +76,11 @@ class Free_giftController:
             "status": True,
             "message": "Congrats! You got a new card",
             "card": {
-                "card_id": random_card,
-                "star": card_star
+                "card_id": cards[random_card].id,
+                "star": card_star,
+                "name": cardNew.name,
+                "spread": cardNew.spread,
+                "max_spread": cardNew.max_spread,
+                "image_path": cardNew.image_path
             }
         }, 200
