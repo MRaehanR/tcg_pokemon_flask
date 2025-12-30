@@ -23,9 +23,7 @@ class Free_giftController:
             raise Exception("User Tidak ditemukan!")
         
         today = datetime.now()
-        checkTime = today - user.last_gift_claim
-
-        if checkTime > timedelta(hours=5):
+        if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
             raise Exception("Kamu sudah mengambil free gift hari ini")
         
         try:
@@ -49,9 +47,7 @@ class Free_giftController:
             raise Exception("User Tidak ditemukan!")
 
         today = datetime.now()
-        checkTime = today - user.last_gift_claim
-
-        if checkTime > timedelta(hours=5):
+        if user.last_gift_claim and (today - user.last_gift_claim) < timedelta(hours=5):
             raise Exception("Kamu sudah mengambil free gift hari ini")
 
         cards = Card.query.all()
@@ -60,8 +56,17 @@ class Free_giftController:
 
         user.last_claim = today
 
-        cardUserNew = CardUser(user_id: self.user_id, card_id: cards[random_card].id, stars: card_star)
+        cardUserNew = CardUser(user_id=user_id, card_id= cards[random_card].id, stars= card_star)
+        db.session.add(cardUserNew)
         db.session.commit()
+
+        try:
+            user.last_gift_claim = today
+
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise Exception("Failed to Update User: " + str(e))
 
         return {
             "status": True,
