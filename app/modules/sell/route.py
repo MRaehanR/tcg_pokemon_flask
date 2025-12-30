@@ -5,7 +5,7 @@ from app.utils.response import response_success
 
 sell_bp = Blueprint('sell', __name__)
 sell_controller = SellController()
-@sell_bp.route('/', methods=['POST'])
+@sell_bp.route('/post', methods=['POST'])
 def index():
     """ Example endpoint with simple greeting.
     ---
