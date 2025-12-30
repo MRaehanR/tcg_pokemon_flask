@@ -46,3 +46,8 @@ def initialize_seeder(app: Flask):
         seeder = FlaskSeeder()
         seeder.init_app(app, db)
         return seeder
+    
+def initialize_cors(app: Flask):
+    from flask_cors import CORS
+    with app.app_context():
+        CORS(app)
