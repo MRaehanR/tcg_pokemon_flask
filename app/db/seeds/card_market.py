@@ -10,10 +10,10 @@ class CardMarketSeeder(Seeder):
     def run(self):
         cardUser1 = CardUser.query.filter_by(user_id=1).all()
         
-        for card_market in cardUser1:
+        for card_user in cardUser1:
             cardUserSells = CardMarket(
                 seller_id=1,
-                card_id=card_market.card_id,
+                card_id=card_user.id,
                 price=randint(10, 1000)
             )
             self.db.session.add(cardUserSells)
