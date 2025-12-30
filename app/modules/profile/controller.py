@@ -22,7 +22,8 @@ class ProfileController:
                 "stars": cu.stars,
                 "spread": cu.card.spread,
                 "max_spread": cu.card.max_spread,
-                "image": cu.card.image_path
+                "image": cu.card.image_path,
+                "is_in_market": True if cu.card_market else False
             })
 
         return {
