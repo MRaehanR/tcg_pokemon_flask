@@ -5,6 +5,7 @@ from app.modules.market.route import market_bp
 from app.modules.profile.route import profile_bp
 from app.modules.sell.route import sell_bp
 from app.modules.storage.route import storage_bp
+from app.modules.free_gift.route import free_gift_bp
 from app.modules.beli.route import beli_bp
 
 def routes(app: Flask):
@@ -14,4 +15,5 @@ def routes(app: Flask):
     app.register_blueprint(profile_bp, url_prefix='/api/v1/profile')
     app.register_blueprint(sell_bp, url_prefix='/api/v1/sell')
     app.register_blueprint(storage_bp, url_prefix='/storage')
+    app.register_blueprint(free_gift_bp, url_prefix='/api/v1/free_gift')
     app.register_blueprint(beli_bp, url_prefix='/api/v1/beli')
