@@ -5,7 +5,7 @@ from app.utils.response import response_success, response_error
 
 profile_bp = Blueprint('profile', __name__)
 profile_controller = ProfileController()
-@profile_bp.route('/', methods=['GET'])
+@profile_bp.route('/get', methods=['GET'])
 def index():
     """ Example endpoint with simple greeting.
     ---
